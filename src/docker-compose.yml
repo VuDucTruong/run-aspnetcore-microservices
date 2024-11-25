@@ -16,25 +16,25 @@ services:
   messagebroker:
     image: rabbitmq:management
 
-  catalog.api:
+  catalog-api:
     image: ${DOCKER_REGISTRY-}catalogapi
     build:
       context: .
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
 
-  basket.api:
+  basket-api:
     image: ${DOCKER_REGISTRY-}basketapi
     build:
       context: .
       dockerfile: Services/Basket/Basket.API/Dockerfile
 
-  discount.grpc:
+  discount-grpc:
     image: ${DOCKER_REGISTRY-}discountgrpc
     build:
       context: .
       dockerfile: Services/Discount/Discount.Grpc/Dockerfile
 
-  ordering.api:
+  ordering-api:
     image: ${DOCKER_REGISTRY-}orderingapi
     build:
       context: .
@@ -46,7 +46,7 @@ services:
       context: .
       dockerfile: ApiGateways/YarpApiGateway/Dockerfile
 
-  shopping.web:
+  shopping-web:
     image: ${DOCKER_REGISTRY-}shoppingweb
     build:
       context: .

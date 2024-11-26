@@ -87,5 +87,5 @@ stages:
         action: 'deploy'
         kubernetesServiceConnection: 'aks-connection'
         namespace: '$(AKS_NAMESPACE)'
-        manifests: '/src/k8s-files/*'
+        manifests: '$(WORKING_DIR)/k8s-files/*'
 

@@ -33,12 +33,12 @@ stages:
 #         sourceFolder: '$(System.DefaultWorkingDirectory)'
 #       displayName: "Clean workspace"
 
-# - stage: Checkout
-#   displayName: "Checkout Code"
-#   jobs:
-#   - job: CheckoutCode
-#     steps:
-#     - checkout: self # Sử dụng code đã được checkout vào pipeline
+- stage: Checkout
+  displayName: "Checkout Code"
+  jobs:
+  - job: CheckoutCode
+    steps:
+    - checkout: self # Sử dụng code đã được checkout vào pipeline
 
 - stage: SonarQubeAnalysis
   displayName: "Run SonarQube Analysis"

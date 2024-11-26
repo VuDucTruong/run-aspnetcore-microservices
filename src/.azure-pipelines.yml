@@ -79,13 +79,12 @@ stages:
 #       displayName: 'Build and Push Docker Image'
 
 - stage: Deploy
+  displayName: "Run K8s"
   jobs:
-  - job: DeployToAKS
+  - job: K8s
     steps:
-    - task: KubernetesManifest@1
-      inputs:
-        action: 'deploy'
-        kubernetesServiceConnection: 'aks-connection'
-        namespace: '$(AKS_NAMESPACE)'
-        manifests: '$(WORKING_DIR)/k8s-files/*'
+      - script: |
+          kubectl apply -f $(WORKING_DIR)/k8s-files/
+        displayName: 'Deploy Kubernetes manifests'
+
 

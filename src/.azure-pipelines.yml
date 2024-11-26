@@ -23,29 +23,29 @@ stages:
         dotnet --version
       displayName: "Check .NET version"
 
-- stage: CleanWorkspace
-  displayName: "Clean Workspace"
-  jobs:
-  - job: Clean
-    steps:
-    - task: DeleteFiles@1
-      inputs:
-        sourceFolder: '$(System.DefaultWorkingDirectory)'
-      displayName: "Clean workspace"
+# - stage: CleanWorkspace
+#   displayName: "Clean Workspace"
+#   jobs:
+#   - job: Clean
+#     steps:
+#     - task: DeleteFiles@1
+#       inputs:
+#         sourceFolder: '$(System.DefaultWorkingDirectory)'
+#       displayName: "Clean workspace"
 
-- stage: Checkout
-  displayName: "Checkout Code"
-  jobs:
-  - job: CheckoutCode
-    steps:
-    - checkout: self # Sử dụng code đã được checkout vào pipeline
+# - stage: Checkout
+#   displayName: "Checkout Code"
+#   jobs:
+#   - job: CheckoutCode
+#     steps:
+#     - checkout: self # Sử dụng code đã được checkout vào pipeline
 
 - stage: SonarQubeAnalysis
   displayName: "Run SonarQube Analysis"
   jobs:
   - job: SonarQube
     steps:
-    - task: SonarQubePrepare@5
+    - task: SonarQubePrepare@7
       inputs:
         SonarQube: 'SonarQube' # Kết nối SonarQube của bạn (service connection)
         projectKey: 'aspnet_project'
@@ -54,8 +54,8 @@ stages:
     - script: |
         dotnet build $(WORKING_DIR)/eshop-microservices.sln
       displayName: "Build project for analysis"
-    - task: SonarQubeAnalyze@5
-    - task: SonarQubePublish@5
+    - task: SonarQubeAnalyze@7
+    - task: SonarQubePublish@7
       inputs:
         pollingTimeoutSec: '300'
 

@@ -3,8 +3,12 @@ trigger:
     include:
       - master # Hoặc branch mà bạn muốn trigger pipeline
 
+# pool:
+#   vmImage: 'windows-latest' # Sử dụng agent Windows cho dự án ASP.NET
 pool:
-  vmImage: 'windows-latest' # Sử dụng agent Windows cho dự án ASP.NET
+  name: 'Default'  # Tên pool mà bạn đã cấu hình
+  demands:
+    - agent.name -equals dotnet-agent
 
 variables:
   WORKING_DIR: 'run-aspnetcore-microservices/src'

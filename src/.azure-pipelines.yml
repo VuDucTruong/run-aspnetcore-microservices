@@ -1,0 +1,75 @@
+trigger:
+  branches:
+    include:
+      - master # Hoặc branch mà bạn muốn trigger pipeline
+
+pool:
+  vmImage: 'windows-latest' # Sử dụng agent Windows cho dự án ASP.NET
+
+variables:
+  WORKING_DIR: 'run-aspnetcore-microservices/src'
+
+stages:
+- stage: CheckDotnetVersion
+  displayName: "Check .NET version"
+  jobs:
+  - job: CheckVersion
+    steps:
+    - script: |
+        dotnet --version
+      displayName: "Check .NET version"
+
+- stage: CleanWorkspace
+  displayName: "Clean Workspace"
+  jobs:
+  - job: Clean
+    steps:
+    - task: DeleteFiles@1
+      inputs:
+        sourceFolder: '$(System.DefaultWorkingDirectory)'
+      displayName: "Clean workspace"
+
+- stage: Checkout
+  displayName: "Checkout Code"
+  jobs:
+  - job: CheckoutCode
+    steps:
+    - checkout: self # Sử dụng code đã được checkout vào pipeline
+
+- stage: SonarQubeAnalysis
+  displayName: "Run SonarQube Analysis"
+  jobs:
+  - job: SonarQube
+    steps:
+    - task: SonarQubePrepare@5
+      inputs:
+        SonarQube: 'SonarQube' # Kết nối SonarQube của bạn (service connection)
+        projectKey: 'aspnet_project'
+        scannerMode: 'CLI'
+        configMode: 'manual'
+    - script: |
+        dotnet build $(WORKING_DIR)/eshop-microservices.sln
+      displayName: "Build project for analysis"
+    - task: SonarQubeAnalyze@5
+    - task: SonarQubePublish@5
+      inputs:
+        pollingTimeoutSec: '300'
+
+- stage: RunDockerCompose
+  displayName: "Run Docker Compose"
+  jobs:
+  - job: DockerCompose
+    steps:
+    - script: |
+        docker-compose -f $(WORKING_DIR)/docker-compose.yml -f $(WORKING_DIR)/docker-compose.override.yml up -d
+      displayName: "Run Docker Compose"
+
+- stage: Deploy
+  displayName: "Deploy Application"
+  jobs:
+  - job: Deployment
+    steps:
+    - script: |
+        echo "Deploying the application..."
+      displayName: "Deploy Application"
+

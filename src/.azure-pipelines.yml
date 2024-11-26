@@ -79,7 +79,6 @@ stages:
 #       displayName: 'Build and Push Docker Image'
 
 - stage: Deploy
-  dependsOn: Build
   jobs:
   - job: DeployToAKS
     steps:

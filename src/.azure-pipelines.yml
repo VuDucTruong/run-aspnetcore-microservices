@@ -64,19 +64,19 @@ stages:
 #         docker-compose -f $(WORKING_DIR)/docker-compose.yml -f $(WORKING_DIR)/docker-compose.override.yml up -d
 #       displayName: "Run Docker Compose"
 
-- stage: Build
-  jobs:
-  - job: BuildAndPush
-    steps:
-    - task: UseDotNet@2
-      inputs:
-        packageType: 'sdk'
-        version: '6.x'
+# - stage: Build
+#   jobs:
+#   - job: BuildAndPush
+#     steps:
+#     - task: UseDotNet@2
+#       inputs:
+#         packageType: 'sdk'
+#         version: '6.x'
 
-    - script: |
-        docker-compose -f $(WORKING_DIR)/docker-compose-merged.yml build
-        docker-compose -f $(WORKING_DIR)/docker-compose-merged.yml push
-      displayName: 'Build and Push Docker Image'
+#     - script: |
+#         docker-compose -f $(WORKING_DIR)/docker-compose-merged.yml build
+#         docker-compose -f $(WORKING_DIR)/docker-compose-merged.yml push
+#       displayName: 'Build and Push Docker Image'
 
 - stage: Deploy
   dependsOn: Build
@@ -88,5 +88,5 @@ stages:
         action: 'deploy'
         kubernetesServiceConnection: 'aks-connection'
         namespace: '$(AKS_NAMESPACE)'
-        manifests: 'k8s-files/*'
+        manifests: '/src/k8s-files/*'
 

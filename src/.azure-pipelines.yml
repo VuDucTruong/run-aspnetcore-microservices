@@ -11,7 +11,7 @@ pool:
     - agent.name -equals dotnet-agent
 
 variables:
-  WORKING_DIR: 'run-aspnetcore-microservices/src'
+  WORKING_DIR: '$(Build.SourcesDirectory)/src'
 
 stages:
 - stage: CheckDotnetVersion

@@ -48,16 +48,20 @@ stages:
     - task: SonarQubePrepare@7
       inputs:
         SonarQube: 'SonarQube' # Kết nối SonarQube của bạn (service connection)
-        projectKey: 'aspnet_project'
+        cliProjectKey: 'my_asp_project'
+        cliProjectName: 'aspnet_project'
         scannerMode: 'CLI'
+        cliProjectVersion: '1.0'
         configMode: 'manual'
     - script: |
         dotnet build $(WORKING_DIR)/eshop-microservices.sln
       displayName: "Build project for analysis"
     - task: SonarQubeAnalyze@7
+      displayName: 'Run SonarQube Analysis'
     - task: SonarQubePublish@7
       inputs:
         pollingTimeoutSec: '300'
+      displayName: 'Publish SonarQube Analysis Results'
 
 - stage: RunDockerCompose
   displayName: "Run Docker Compose"

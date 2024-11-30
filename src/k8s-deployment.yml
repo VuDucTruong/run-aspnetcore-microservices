@@ -1,0 +1,673 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: basket-api
+  name: basket-api
+spec:
+  ports:
+    - name: "6001"
+      port: 6001
+      targetPort: 80
+  selector:
+    io.kompose.service: basket-api
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: basketdb
+  name: basketdb
+spec:
+  ports:
+    - name: "5433"
+      port: 5433
+      targetPort: 5432
+  selector:
+    io.kompose.service: basketdb
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: catalog-api
+  name: catalog-api
+spec:
+  ports:
+    - name: "6000"
+      port: 6000
+      targetPort: 80
+  selector:
+    io.kompose.service: catalog-api
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: catalogdb
+  name: catalogdb
+spec:
+  ports:
+    - name: "5432"
+      port: 5432
+      targetPort: 5432
+  selector:
+    io.kompose.service: catalogdb
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: discount-grpc
+  name: discount-grpc
+spec:
+  ports:
+    - name: "6002"
+      port: 6002
+      targetPort: 80
+  selector:
+    io.kompose.service: discount-grpc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: distributedcache
+  name: distributedcache
+spec:
+  ports:
+    - name: "6379"
+      port: 6379
+      targetPort: 6379
+  selector:
+    io.kompose.service: distributedcache
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: messagebroker
+  name: messagebroker
+spec:
+  ports:
+    - name: "5672"
+      port: 5672
+      targetPort: 5672
+    - name: "15672"
+      port: 15672
+      targetPort: 15672
+  selector:
+    io.kompose.service: messagebroker
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: orderdb
+  name: orderdb
+spec:
+  ports:
+    - name: "1433"
+      port: 1433
+      targetPort: 1433
+  selector:
+    io.kompose.service: orderdb
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: ordering-api
+  name: ordering-api
+spec:
+  ports:
+    - name: "6003"
+      port: 6003
+      targetPort: 80
+  selector:
+    io.kompose.service: ordering-api
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: shopping-web
+  name: shopping-web
+spec:
+  ports:
+    - name: "6065"
+      port: 6065
+      targetPort: 80
+  selector:
+    io.kompose.service: shopping-web
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: yarpapigateway
+  name: yarpapigateway
+spec:
+  ports:
+    - name: "6004"
+      port: 6004
+      targetPort: 80
+  selector:
+    io.kompose.service: yarpapigateway
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: basket-api
+  name: basket-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: basket-api
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+        kompose.version: 1.34.0 (cbf2835db)
+      labels:
+        io.kompose.service: basket-api
+    spec:
+      containers:
+        - env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+            - name: ASPNETCORE_HTTP_PORTS
+              value: "80"
+            - name: ConnectionStrings__Database
+              value: Server=basketdb;Port=5432;Database=BasketDb;User Id=postgres;Password=postgres;Include Error Detail=true
+            - name: ConnectionStrings__Redis
+              value: distributedcache:6379
+            - name: GrpcSettings__DiscountUrl
+              value: http://discount-grpc:80
+            - name: MessageBroker__Host
+              value: amqp://ecommerce-mq:5672
+            - name: MessageBroker__Password
+              value: guest
+            - name: MessageBroker__UserName
+              value: guest
+          image: truong642003/basketapi
+          name: basket-api
+          ports:
+            - containerPort: 80
+              protocol: TCP
+      restartPolicy: Always
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: basketdb
+  name: basketdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: basketdb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+        kompose.version: 1.34.0 (cbf2835db)
+      labels:
+        io.kompose.service: basketdb
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              value: BasketDb
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_USER
+              value: postgres
+          image: postgres
+          name: basketdb
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-basket
+      restartPolicy: Always
+      volumes:
+        - name: postgres-basket
+          persistentVolumeClaim:
+            claimName: postgres-basket
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    io.kompose.service: postgres-basket
+  name: postgres-basket
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: catalog-api
+  name: catalog-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: catalog-api
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+        kompose.version: 1.34.0 (cbf2835db)
+      labels:
+        io.kompose.service: catalog-api
+    spec:
+      containers:
+        - env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+            - name: ASPNETCORE_HTTP_PORTS
+              value: "80"
+            - name: ConnectionStrings__Database
+              value: Server=catalogdb;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres;Include Error Detail=true
+          image: truong642003/catalogapi
+          name: catalog-api
+          ports:
+            - containerPort: 80
+              protocol: TCP
+      restartPolicy: Always
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: catalogdb
+  name: catalogdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: catalogdb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+        kompose.version: 1.34.0 (cbf2835db)
+      labels:
+        io.kompose.service: catalogdb
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              value: CatalogDb
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_USER
+              value: postgres
+          image: postgres
+          name: catalogdb
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-catalog
+      restartPolicy: Always
+      volumes:
+        - name: postgres-catalog
+          persistentVolumeClaim:
+            claimName: postgres-catalog
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    io.kompose.service: postgres-catalog
+  name: postgres-catalog
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: discount-grpc
+  name: discount-grpc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: discount-grpc
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+        kompose.version: 1.34.0 (cbf2835db)
+      labels:
+        io.kompose.service: discount-grpc
+    spec:
+      containers:
+        - env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+            - name: ASPNETCORE_HTTP_PORTS
+              value: "80"
+            - name: ConnectionStrings__Database
+              value: Data Source=discountdb
+          image: truong642003/discountgrpc
+          name: discount-grpc
+          ports:
+            - containerPort: 80
+              protocol: TCP
+      restartPolicy: Always
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: distributedcache
+  name: distributedcache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: distributedcache
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+        kompose.version: 1.34.0 (cbf2835db)
+      labels:
+        io.kompose.service: distributedcache
+    spec:
+      containers:
+        - image: redis
+          name: distributedcache
+          ports:
+            - containerPort: 6379
+              protocol: TCP
+      restartPolicy: Always
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: messagebroker
+  name: messagebroker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: messagebroker
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+        kompose.version: 1.34.0 (cbf2835db)
+      labels:
+        io.kompose.service: messagebroker
+    spec:
+      containers:
+        - env:
+            - name: RABBITMQ_DEFAULT_PASS
+              value: guest
+            - name: RABBITMQ_DEFAULT_USER
+              value: guest
+          image: rabbitmq:management
+          name: messagebroker
+          ports:
+            - containerPort: 5672
+              protocol: TCP
+            - containerPort: 15672
+              protocol: TCP
+      hostname: ecommerce-mq
+      restartPolicy: Always
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: orderdb
+  name: orderdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: orderdb
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+        kompose.version: 1.34.0 (cbf2835db)
+      labels:
+        io.kompose.service: orderdb
+    spec:
+      containers:
+        - env:
+            - name: ACCEPT_EULA
+              value: "Y"
+            - name: SA_PASSWORD
+              value: SwN12345678
+          image: mcr.microsoft.com/mssql/server
+          name: orderdb
+          ports:
+            - containerPort: 1433
+              protocol: TCP
+      restartPolicy: Always
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: ordering-api
+  name: ordering-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: ordering-api
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+        kompose.version: 1.34.0 (cbf2835db)
+      labels:
+        io.kompose.service: ordering-api
+    spec:
+      containers:
+        - env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+            - name: ASPNETCORE_HTTP_PORTS
+              value: "80"
+            - name: ConnectionStrings__Database
+              value: Server=orderdb;Database=OrderDb;User Id=sa;Password=SwN12345678;Encrypt=False;TrustServerCertificate=True
+            - name: FeatureManagement__OrderFullfilment
+              value: "false"
+            - name: MessageBroker__Host
+              value: amqp://ecommerce-mq:5672
+            - name: MessageBroker__Password
+              value: guest
+            - name: MessageBroker__UserName
+              value: guest
+          image: truong642003/orderingapi
+          name: ordering-api
+          ports:
+            - containerPort: 80
+              protocol: TCP
+      restartPolicy: Always
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: shopping-web
+  name: shopping-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: shopping-web
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+        kompose.version: 1.34.0 (cbf2835db)
+      labels:
+        io.kompose.service: shopping-web
+    spec:
+      containers:
+        - env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+            - name: ASPNETCORE_HTTP_PORTS
+              value: "80"
+            - name: ApiSettings__GatewayAddress
+              value: http://yarpapigateway:80
+          image: truong642003/shoppingweb
+          name: shopping-web
+          ports:
+            - containerPort: 80
+              protocol: TCP
+      restartPolicy: Always
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+    kompose.version: 1.34.0 (cbf2835db)
+  labels:
+    io.kompose.service: yarpapigateway
+  name: yarpapigateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: yarpapigateway
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: D:\Kompose\kompose.exe convert -f docker-compose.merged.yml -o k8s-deployment.yml -v
+        kompose.version: 1.34.0 (cbf2835db)
+      labels:
+        io.kompose.service: yarpapigateway
+    spec:
+      containers:
+        - env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+            - name: ASPNETCORE_HTTP_PORTS
+              value: "80"
+          image: truong642003/yarpapigateway
+          name: yarpapigateway
+          ports:
+            - containerPort: 80
+              protocol: TCP
+      restartPolicy: Always
+

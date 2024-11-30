@@ -6,14 +6,14 @@ trigger:
 # pool:
 #   vmImage: 'windows-latest' # Sử dụng agent Windows cho dự án ASP.NET
 pool:
-  name: 'Default'  # Tên pool mà bạn đã cấu hình
+  name: 'Azure Pipelines'  # Tên pool mà bạn đã cấu hình
   demands:
     - agent.name -equals Hosted Agent
 
 variables:
   WORKING_DIR: '$(Build.SourcesDirectory)/src'
   REGISTRY: 'victorvu64.azurecr.io'
-  AKS_NAMESPACE: 'Azure Pipelines'
+  AKS_NAMESPACE: 'default'
 
 stages:
 - stage: CheckDotnetVersion

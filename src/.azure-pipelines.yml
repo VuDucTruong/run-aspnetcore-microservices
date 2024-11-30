@@ -8,12 +8,12 @@ trigger:
 pool:
   name: 'Default'  # Tên pool mà bạn đã cấu hình
   demands:
-    - agent.name -equals dotnet-agent
+    - agent.name -equals Hosted Agent
 
 variables:
   WORKING_DIR: '$(Build.SourcesDirectory)/src'
   REGISTRY: 'victorvu64.azurecr.io'
-  AKS_NAMESPACE: 'default'
+  AKS_NAMESPACE: 'Azure Pipelines'
 
 stages:
 - stage: CheckDotnetVersion

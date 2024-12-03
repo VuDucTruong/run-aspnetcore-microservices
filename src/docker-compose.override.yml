@@ -111,7 +111,7 @@ services:
       - basket-api
       - ordering-api
     ports:
-      - "6004:80"
+      - "6064:80"
 
   shopping-web:
     environment:
